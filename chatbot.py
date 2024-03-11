@@ -74,9 +74,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
 
         for chunk in stream:
-            st.write(chunk)
-            if chunk.choices[0].delta.content is not None:
-                st.write(chunk.choices[0].delta.content, end="")
+            delta = chunk.choices[0].delta
+            if delta:
+                st.write(delta.content)
+            #elif delta and delta.tool_calls:
+
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 
