@@ -3,7 +3,9 @@ from openai import OpenAI
 
 import instructions
 
-st.title(f'{delimiter}CS 3186 Student Assistant Chatbot')
+bla = get_instructions()
+
+st.title(f'{bla}CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -14,7 +16,7 @@ if 'openai_model' not in st.session_state:
 
 # Initialize chat history
 if 'messages' not in st.session_state:
-    st.session_state.messages = [{'role': 'system', 'content': instructions}]
+    st.session_state.messages = [{'role': 'system', 'content': get_instructions()}]
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
