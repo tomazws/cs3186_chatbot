@@ -39,11 +39,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             tools = prompts.get_tools(),
             #stream = True,
         )
-        if response[0].finish_reason == 'tool_calls':
-            st.write(response[0])
+        if response.choices[0].finish_reason == 'tool_calls':
+            st.write(response.choices[0])
             #st.write(call_function(messages, response[0]))
         else:
-            st.write(response[0]['content'])
+            st.write(response.choices[0].message.content)
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method
