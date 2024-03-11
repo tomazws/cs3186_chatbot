@@ -1,7 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 
-st.title('CS 3186 Student Assistant Chatbot')
+st.title(f'{delimiter}CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -12,7 +12,7 @@ if 'openai_model' not in st.session_state:
 
 # Initialize chat history
 if 'messages' not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [{'role': 'system', 'content': instructions}]
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
@@ -38,4 +38,4 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             stream = True,
         )
         response = st.write_stream(stream)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.append({'role': 'assistant', 'content': response})
