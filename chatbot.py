@@ -53,13 +53,13 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 for m in st.session_state.messages
             ],
             tools = prompts.get_tools(),
+            stream = True,
         )
         response = response.choices[0]
-        #st.write(response)
         if response.finish_reason == 'tool_calls':
             call_function(response.message.tool_calls[0].function)
         else:
-            st.write_stream(response)
+            st.write_stream(response.message.content)
             st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 
