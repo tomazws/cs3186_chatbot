@@ -3,7 +3,7 @@ import openai
 
 openai.api_key = st.secrets['OPENAI_API_KEY']
 
-st.title("CS 3186 Student Assistant Chatbot")
+st.title('asdf')
 
 # Initialize chat history
 if 'messages' not in st.session_state:
