@@ -3,7 +3,7 @@ import openai
 
 openai.api_key = st.secrets['OPENAI_API_KEY']
 
-st.title = 'CS 3186 Student Assistant Chatbot'
+st.title('CS 3186 Student Assistant Chatbot')
 
 # Initialize chat history
 if 'messages' not in st.session_state:
@@ -31,5 +31,5 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     # Add assistant response to chat history
     st.session_state.messages.append({'role': 'assistant', 'content': response})
-    
+
 
