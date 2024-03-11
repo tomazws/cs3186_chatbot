@@ -2,6 +2,20 @@ import prompts
 import streamlit as st
 from openai import OpenAI
 
+# Functions for OpenAI's function calling method
+def asdfasdf():
+    st.write('yasdf')
+    # if bla.name == 'createDiagram':
+    #     try:
+    #         parsed_args = json.loads(bla.arguments)
+    #         st.write(parsed_args)
+    #     except Exveption as e:
+    #         return f'Function execution failed: {e}'
+    # return 'no'
+
+def createDiagram(dot_script):
+    return 'Yes yes yall'
+
 st.title('CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
@@ -48,20 +62,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         else:
             st.write(response.message.content)
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
-
-# Functions for OpenAI's function calling method
-def asdfasdf():
-    st.write('yasdf')
-    # if bla.name == 'createDiagram':
-    #     try:
-    #         parsed_args = json.loads(bla.arguments)
-    #         st.write(parsed_args)
-    #     except Exveption as e:
-    #         return f'Function execution failed: {e}'
-    # return 'no'
-
-def createDiagram(dot_script):
-    return 'Yes yes yall'
 
 
 
