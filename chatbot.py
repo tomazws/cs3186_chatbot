@@ -14,7 +14,7 @@ if "thread_id" not in st.session_state:
 
 ######################
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 #starts the api chat
 thread = client.beta.threads.create()
