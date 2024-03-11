@@ -1,6 +1,8 @@
 import streamlit as st
 from openai import OpenAI
 
+import instructions
+
 st.title(f'{delimiter}CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
