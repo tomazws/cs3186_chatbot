@@ -53,7 +53,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 for m in st.session_state.messages
             ],
             tools = prompts.get_tools(),
-            stream = True,
         )
         response = response.choices[0]
         #st.write(response)
