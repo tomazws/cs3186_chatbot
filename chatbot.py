@@ -6,17 +6,22 @@ from openai import OpenAI
 
 def createDiagram(dot_script):
     st.graphviz_chart(dot_script)
+    st.session_state.messages.append(
+        {
+            'role': 'function',
+            'name': 'createDiagram',
+            'content': dot_script
+        }
+    )
 
 # Functions for OpenAI's function calling method
 def call_function(function):
     if function.name == 'createDiagram':
         try:
             parsed_args = json.loads(function.arguments)
-            st.write(parsed_args)
             createDiagram(parsed_args['dot_script'])
         except Exception as e:
             st.write(e)
-    return 'asdf'
 
 st.title('CS 3186 Student Assistant Chatbot')
 
@@ -57,67 +62,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             )
             response = response.choices[0]
             if response.finish_reason == 'tool_calls':
-                response = call_function(response.message.tool_calls[0].function)
+                call_function(response.message.tool_calls[0].function)
             else:
                 st.write(response.message.content)
                 st.session_state.messages.append({'role': 'assistant', 'content': response.message.content})
-
-
-
-
-    # with st.chat_message('assistant'):
-    #     response = client.chat.completions.create(
-    #         model = st.session_state['openai_model'],
-    #         messages = [
-    #             {'role': m['role'], 'content': m['content']}
-    #             for m in st.session_state.messages
-    #         ],
-    #         tools = prompts.get_tools(),
-    #     )
-    #     response = response.choices[0]
-    #     if response.finish_reason == 'tool_calls':
-    #         response = call_function(response.message.tool_calls[0].function)
-    #     else:
-    #         st.write(response.message.content)
-    # st.session_state.messages.append({'role': 'assistant', 'content': response})
-
-
-##### REGULAR RESPONSE
-# Choice(
-#     finish_reason='stop',
-#     index=0,
-#     logprobs=None,
-#     message=ChatCompletionMessage(
-#         content='Model's response',
-#         role='assistant',
-#         function_call=None,
-#         tool_calls=None)
-#     )
-
-##### FUNCTION CALLING RESPONSE
-# Choice(
-#     finish_reason='tool_calls',
-#     index=0,
-#     logprobs=None,
-#     message=ChatCompletionMessage(
-#         content=None,
-#         role='assistant',
-#         function_call=None,
-#         tool_calls=[
-#             ChatCompletionMessageToolCall(
-#                 id='call_FmckOxTq0rCsTGCEYWdrevLW',
-#                 function=Function(
-#                     arguments='asdfdsf',
-#                     name='createDiagram'
-#                 ),
-#                 type='function'
-#             )
-#         ]
-#     )
-# )
-
-
-
-
-
-
