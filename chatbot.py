@@ -5,7 +5,7 @@ import graphviz
 from openai import OpenAI
 
 def createDiagram(dot_script):
-    return 'Yes yes yall'
+    st.graphviz_chart(dot_script)
 
 # Functions for OpenAI's function calling method
 def call_function(function):
@@ -53,34 +53,16 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 for m in st.session_state.messages
             ],
             tools = prompts.get_tools(),
-            #stream = True,
+            stream = True,
         )
         response = response.choices[0]
-        st.write(response)
+        #st.write(response)
         if response.finish_reason == 'tool_calls':
-            st.write(response.message.tool_calls[0].function.name)
-            response = call_function(response.message.tool_calls[0].function)
+            call_function(response.message.tool_calls[0].function)
         else:
-            st.write(response.message.content)
-    #st.session_state.messages.append({'role': 'assistant', 'content': response})
+            st.write_stream(response)
+            st.session_state.messages.append({'role': 'assistant', 'content': response})
 
-st.graphviz_chart('''
-    digraph {
-        run -> intr
-        intr -> runbl
-        runbl -> run
-        run -> kernel
-        kernel -> zombie
-        kernel -> sleep
-        kernel -> runmem
-        sleep -> swap
-        swap -> runswap
-        runswap -> new
-        runswap -> runmem
-        new -> runmem
-        sleep -> runmem
-    }
-''')
 
 
 
