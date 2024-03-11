@@ -29,10 +29,11 @@ def call_function(function):
         try:
             parsed_args = json.loads(function.arguments)
             st.write(parsed_args)
+            createDiagram(parsed_args.dot_script)
         except Exception as e:
             st.write(e)
             return f'Function execution failed: {e}'
-    return 'no'
+    return ''
 
 st.title('CS 3186 Student Assistant Chatbot')
 
@@ -62,35 +63,35 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     # Display assistant response in chat message container
     with st.chat_message('assistant'):
-        response = client.chat.completions.create(
+        stream = client.chat.completions.create(
             model = st.session_state['openai_model'],
             messages = [
                 {'role': m['role'], 'content': m['content']}
                 for m in st.session_state.messages
             ],
             tools = prompts.get_tools(),
+            stream = True
         )
-        response = response.choices[0]
-        if response.finish_reason == 'tool_calls':
-            response = call_function(response.message.tool_calls[0].function)
-        else:
-            st.write(response.message.content)
+        response = st.write_stream(stream)
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 
 
 
     # with st.chat_message('assistant'):
-    #     stream = client.chat.completions.create(
+    #     response = client.chat.completions.create(
     #         model = st.session_state['openai_model'],
     #         messages = [
     #             {'role': m['role'], 'content': m['content']}
     #             for m in st.session_state.messages
     #         ],
     #         tools = prompts.get_tools(),
-    #         #stream = True,
     #     )
-    #     response = st.write_stream(stream)
+    #     response = response.choices[0]
+    #     if response.finish_reason == 'tool_calls':
+    #         response = call_function(response.message.tool_calls[0].function)
+    #     else:
+    #         st.write(response.message.content)
     # st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 
