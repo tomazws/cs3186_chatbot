@@ -78,7 +78,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 st.write_stream(stream)
                 break
             else:
-                st.write(chunk.choices[0].delta.tool_calls)
+                st.write(chunk.choices[0].delta)
 
 
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
