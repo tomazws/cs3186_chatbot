@@ -11,10 +11,11 @@ def createDiagram(dot_script):
 def call_function(function):
     if function.name == 'createDiagram':
         try:
-            parsed_args = json.loads(function.arguments)
-            st.write(parsed_args)
-            st.write(parsed_args.dot_script)
-            createDiagram(parsed_args.dot_script)
+            print(function.arguments)
+            # parsed_args = json.loads(function.arguments)
+            # st.write(parsed_args)
+            # st.write(parsed_args.dot_script)
+            # createDiagram(parsed_args.dot_script)
         except Exception as e:
             st.write(e)
     return 'asdf'
