@@ -62,16 +62,16 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     # Display assistant response in chat message container
     with st.chat_message('assistant'):
-        response = client.chat.completions.create(
-            model = st.session_state['openai_model'],
-            messages = [
-                {'role': m['role'], 'content': m['content']}
-                for m in st.session_state.messages
-            ],
-            tools = prompts.get_tools(),
-            #stream = True,
-        )
-        response = response.choices[0]
+        # response = client.chat.completions.create(
+        #     model = st.session_state['openai_model'],
+        #     messages = [
+        #         {'role': m['role'], 'content': m['content']}
+        #         for m in st.session_state.messages
+        #     ],
+        #     tools = prompts.get_tools(),
+        #     #stream = True,
+        # )
+        # response = response.choices[0]
         # st.write(response)
         # if response.finish_reason == 'tool_calls':
         #     st.write(response.message.tool_calls[0].function.name)
