@@ -7,9 +7,9 @@ def createDiagram(dot_script):
 
 # Functions for OpenAI's function calling method
 def call_function(function):
-    if bla.name == 'createDiagram':
+    if function.name == 'createDiagram':
         try:
-            parsed_args = json.loads(bla.arguments)
+            parsed_args = json.loads(function.arguments)
             st.write(parsed_args)
         except Exveption as e:
             return f'Function execution failed: {e}'
