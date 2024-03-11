@@ -13,12 +13,13 @@ def call_function(function):
         try:
             parsed_args = json.loads(function.arguments)
             createDiagram(parsed_args['dot_script'])
-            st.session_state.messages.append(
-                {
-                    'role': 'function',
-                    'content': 'yes'
-                }
-            )
+            # st.session_state.messages.append(
+            #     {
+            #         'role': 'function',
+            #         'name': function.name,
+            #         'content': parsed_args['dot_script']
+            #     }
+            # )
         except Exception as e:
             st.write(e)
 
