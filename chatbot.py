@@ -1,7 +1,7 @@
 import prompts
 import json
-import graphviz
 import streamlit as st
+import graphviz
 from openai import OpenAI
 
 def createDiagram(dot_script):
