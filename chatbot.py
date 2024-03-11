@@ -1,5 +1,6 @@
 import prompts
 import json
+import graphviz
 import streamlit as st
 from openai import OpenAI
 
@@ -11,7 +12,7 @@ def call_function(function):
     if function.name == 'createDiagram':
         try:
             parsed_args = json.loads(function.arguments)
-            st.write(parsed_args)
+            st.write(parsed_args.dot_script)
         except Exception as e:
             st.write(e)
             return f'Function execution failed: {e}'
