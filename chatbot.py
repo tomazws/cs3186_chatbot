@@ -1,65 +1,41 @@
-
-
 import streamlit as st
-import openai
-import time
-assistant_id = "asst_XxWDDUodJclsJxmd4iOqBe5O"
-client = openai
+from openai import OpenAI
 
-##############INIT################
-st.title('Annual weather Chatbot')
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+st.title('CS 3186 Student Assistant Chatbot')
 
-if "thread_id" not in st.session_state:
-    st.session_state.thread_id = None
+# Set OpenAI API key from Streamlit secrets
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-######################
+# Set a default model
+if 'openai_model' not in st.session_state:
+    st.session_state['openai_model'] = 'gpt-3.5-turbo'
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# Initialize chat history
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
 
-#starts the api chat
-thread = client.beta.threads.create()
-st.session_state.thread_id = thread.id
-
-#prints messages
-for message in st.session_state.chat_history:
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
     with st.chat_message(message['role']):
-           st.markdown(message['message'])
+        st.markdown(message['content'])
 
-#
-if prompt := st.chat_input("Type in your question"):
-    #st.chat_message("User").markdown(prompt)
-    with st.chat_message("user"):
-            st.markdown(prompt)
-    st.session_state.chat_history.append({"role":"user","message":prompt})
+# React to user input
+if prompt := st.chat_input('Ask me anything about CS 3186'):
+    # Display user message in chat message container
+    with st.chat_message('user'):
+        st.markdown(prompt)
+    # Add user message to chat history
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
 
-    client.beta.threads.messages.create(
-            thread_id=st.session_state.thread_id,
-            role="user",
-            content=prompt
+    # Display assistant response in chat message container
+    with st.chat_message('assistant'):
+        stream = client.chat.completions.create(
+            model = st.session_state['openai_model'],
+            messages = [
+                {'role': m['role'], 'content': m['content']}
+                for m in st.session_state.messages
+            ],
+            stream=True,
         )
-    
-    with st.spinner('Generating your response...'):  
-            run = client.beta.threads.runs.create(
-            thread_id=st.session_state.thread_id,
-            assistant_id=assistant_id,
-            )
-
-            while run.status != 'completed':
-                time.sleep(1)
-                run = client.beta.threads.runs.retrieve(
-                    thread_id=st.session_state.thread_id,
-                    run_id=run.id
-                )
-
-        # Retrieve messages added by the assistant
-            response = client.beta.threads.messages.list(
-                thread_id=st.session_state.thread_id
-            )  
-
-            messages = response.data
-            answer = messages[0].content[0].text.value
-    with st.chat_message("ai"):
-            st.markdown(answer)
-    st.session_state.chat_history.append({"role":"ai","message":answer})
+        response = st.write_stream(stream)
+    st.session_state.messages.append({"role": "assistant", "content": response})
