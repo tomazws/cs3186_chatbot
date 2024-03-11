@@ -37,10 +37,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 for m in st.session_state.messages
             ],
             tools = prompts.get_tools(),
-            stream = True,
+            #stream = True,
         )
-        response = st.write_stream(stream)
-    st.session_state.messages.append({'role': 'assistant', 'content': response})
+        print(stream)
+        #response = st.write_stream(stream)
+    #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method
 def createDiagram():
