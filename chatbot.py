@@ -3,9 +3,7 @@ from openai import OpenAI
 
 from instructions import get_instructions
 
-bla = get_instructions()
-
-st.title(f'{bla}CS 3186 Student Assistant Chatbot')
+st.title('CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
