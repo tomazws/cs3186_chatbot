@@ -49,10 +49,10 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method
-def call_function(function):
-    if function.name == 'createDiagram':
+def call_function(bla):
+    if bla.name == 'createDiagram':
         try:
-            parsed_args = json.loads(function.arguments)
+            parsed_args = json.loads(bla.arguments)
             st.write(parsed_args)
         except Exveption as e:
             return f'Function execution failed: {e}'
