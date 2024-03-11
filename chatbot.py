@@ -1,9 +1,6 @@
+import prompts
 import streamlit as st
 from openai import OpenAI
-
-import prompts
-
-st.write(prompts.get_functions())
 
 st.title('CS 3186 Student Assistant Chatbot')
 
@@ -47,4 +44,5 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
 # Functions for OpenAI's function calling method
 def createDiagram():
+    st.write('Function is called')
     return 'Yes yes yall'
