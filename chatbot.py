@@ -62,7 +62,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 response = call_function(response.message.tool_calls[0].function)
             else:
                 st.write(response.message.content)
-                st.session_state.messages.append({'role': 'assistant', 'content': response})
+                st.session_state.messages.append({'role': 'assistant', 'content': response.message.content})
 
 
 
