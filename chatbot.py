@@ -43,6 +43,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method
-def createDiagram():
-    st.write('Function is called')
+def createDiagram(dot_script):
+    st.write(dot_script)
     return 'Yes yes yall'
