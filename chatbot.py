@@ -47,7 +47,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display assistant response in chat message container
     with st.spinner('Hold on,..'):
         with st.chat_message('assistant'):
-            response = client.chat.completions.create(
+            response = client.ChatCompletion.create(
                 model = st.session_state['openai_model'],
                 messages = [
                     {'role': m['role'], 'content': m['content']}
