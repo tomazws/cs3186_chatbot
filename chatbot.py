@@ -1,3 +1,5 @@
+
+
 import streamlit as st
 import openai
 import time
@@ -14,7 +16,7 @@ if "thread_id" not in st.session_state:
 
 ######################
 
-openai.api_key = "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"
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 #starts the api chat
 thread = client.beta.threads.create()
