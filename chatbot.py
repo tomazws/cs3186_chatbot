@@ -16,7 +16,6 @@ def call_function(function):
             st.session_state.messages.append(
                 {
                     'role': 'function',
-                    'name': function.name,
                     'content': 'yes'
                 }
             )
