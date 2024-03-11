@@ -39,7 +39,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             tools = prompts.get_tools(),
             #stream = True,
         )
-        st.write(response.choices[0])
+        st.write(response)
         if response.choices[0].finish_reason == 'tool_calls':
             st.write(response.message.tool_calls)
             #st.write(call_function(messages, response[0]))
@@ -69,3 +69,44 @@ def createDiagram(dot_script):
     #     )
     #     response = st.write_stream(stream)
     # st.session_state.messages.append({'role': 'assistant', 'content': response})
+
+
+##### REGULAR RESPONSE
+# Choice(
+#     finish_reason='stop',
+#     index=0,
+#     logprobs=None,
+#     message=ChatCompletionMessage(
+#         content='feel free to ask!',
+#         role='assistant',
+#         function_call=None,
+#         tool_calls=None)
+#     )
+
+##### FUNCTION CALLING RESPONSE
+# Choice(
+#     finish_reason='tool_calls',
+#     index=0,
+#     logprobs=None,
+#     message=ChatCompletionMessage(
+#         content=None,
+#         role='assistant',
+#         function_call=None,
+#         tool_calls=[
+#             ChatCompletionMessageToolCall(
+#                 id='call_FmckOxTq0rCsTGCEYWdrevLW',
+#                 function=Function(
+#                     arguments='asdfdsf',
+#                     name='createDiagram'
+#                 ),
+#                 type='function'
+#             )
+#         ]
+#     )
+# )
+
+
+
+
+
+
