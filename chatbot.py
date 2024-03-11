@@ -16,6 +16,7 @@ def call_function(function):
             createDiagram(parsed_args.dot_script)
         except Exception as e:
             st.write(e)
+    return 'asdf'
 
 st.title('CS 3186 Student Assistant Chatbot')
 
@@ -44,7 +45,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     st.session_state.messages.append({'role': 'user', 'content': prompt})
 
     # Display assistant response in chat message container
-    with st.spinner():
+    with st.spinner('Hold on,..'):
         with st.chat_message('assistant'):
             response = client.chat.completions.create(
                 model = st.session_state['openai_model'],
@@ -56,7 +57,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             )
             response = response.choices[0]
             if response.finish_reason == 'tool_calls':
-                call_function(response.message.tool_calls[0].function)
+                response = call_function(response.message.tool_calls[0].function)
             else:
                 st.write(response.message.content)
     st.session_state.messages.append({'role': 'assistant', 'content': response})
