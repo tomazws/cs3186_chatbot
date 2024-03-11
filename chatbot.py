@@ -45,5 +45,4 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
 # Functions for OpenAI's function calling method
 def createDiagram(dot_script):
-    st.write(dot_script)
     return 'Yes yes yall'
