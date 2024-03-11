@@ -15,8 +15,7 @@ def call_function(function):
             st.write(parsed_args.dot_script)
         except Exception as e:
             st.write(e)
-            return f'Function execution failed: {e}'
-    return 'no'
+            st.write(f'Function execution failed: {e}')
 
 st.title('CS 3186 Student Assistant Chatbot')
 
