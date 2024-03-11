@@ -15,7 +15,7 @@ for message in st.session_state.messages:
         st.markdown(message['content'])
 
 # React to user input
-if prompt := st.chat.input('Ask me anything about CS 3186'):
+if prompt := st.chat_input('Ask me anything about CS 3186'):
     with st.chat_message('user'):
         st.markdown(prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
