@@ -23,14 +23,14 @@ def get_instructions():
 def get_functions():
 	return [
 		{
-			'name': 'createDiagram',
-			'description': 'Generate a state diagram',
-			'parameters': {
-				'dot_script': {
-					'type': 'string',
-					'description': 'DOT language representation of the state diagram'
+			"name": "createDiagram",
+			"description": "Generate a state diagram from DOT language",
+			"parameters": {
+				"dot_script": {
+					"type": "string",
+					"description": "DOT language representation of the state diagram"
 				}
 			},
-			'required': ['dot_script']
+			"required": ["dot_script"]
 		}
 	]
