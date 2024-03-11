@@ -41,12 +41,15 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
         if response.choices[0].finish_reason == 'tool_calls':
             st.write(response.choices[0])
+            st.write(response.tool_calls)
             #st.write(call_function(messages, response[0]))
         else:
             st.write(response.choices[0].message.content)
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method
+
+
 def createDiagram(dot_script):
     return 'Yes yes yall'
 
