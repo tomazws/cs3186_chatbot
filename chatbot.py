@@ -1,7 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 
-import instructions
+from instructions import get_instructions
 
 bla = get_instructions()
 
