@@ -11,7 +11,7 @@ def call_function(function):
         try:
             parsed_args = json.loads(function.arguments)
             st.write(parsed_args)
-        except Exveption as e:
+        except Exception as e:
             return f'Function execution failed: {e}'
     return 'no'
 
