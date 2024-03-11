@@ -17,7 +17,7 @@ def call_function(function):
                 {
                     'role': 'function',
                     'name': function.name,
-                    'content': parsed_args['dot_script']
+                    'content': 'yes'
                 }
             )
         except Exception as e:
