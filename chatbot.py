@@ -27,11 +27,17 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Add user message to chat history
     st.session_state.messages.append({'role': 'user', 'content': prompt})
 
-    response = f'Echo: {prompt}'
-
     # Display assistant response in chat message container
     with st.chat_message('assistant'):
-        st.markdown(response)
+        stream = client.chat.completions.create(
+            model = st.session_state['openai_model'],
+            message = [
+                {'role': m['role'], 'content': m['content']}
+                for m in st.session_state.messages
+            ],
+            stream = True,
+        )
+        response = st.write_stream(stream)
     # Add assistant response to chat history
     st.session_state.messages.append({'role': 'assistant', 'content': response})
 
