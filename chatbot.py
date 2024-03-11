@@ -1,7 +1,8 @@
 import streamlit as st
 from openai import OpenAI
 
-from instructions import get_instructions
+from prompts import prompts
+prompts = prompts()
 
 st.title('CS 3186 Student Assistant Chatbot')
 
@@ -14,10 +15,10 @@ if 'openai_model' not in st.session_state:
 
 # Initialize chat history
 if 'messages' not in st.session_state:
-    st.session_state.messages = [{'role': 'system', 'content': get_instructions()}]
+    st.session_state.messages = [{'role': 'system', 'content': prompts.get_instructions()}]
 
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
+# Display chat messages from history on app rerun (Skipping 1st element - system message)
+for message in st.session_state.messages[1:]:
     with st.chat_message(message['role']):
         st.markdown(message['content'])
 
