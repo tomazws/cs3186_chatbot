@@ -6,16 +6,16 @@ from openai import OpenAI
 
 def createDiagram(dot_script):
     st.graphviz_chart(dot_script)
-    st.session_state.messages.append(
-        {
-            'role': 'function',
-            'name': 'createDiagram',
-            'content': dot_script
-        }
-    )
 
 # Functions for OpenAI's function calling method
 def call_function(function):
+    st.session_state.messages.append(
+        {
+            'role': 'function',
+            'name': function.name,
+            'content': function.arguments
+        }
+    )
     if function.name == 'createDiagram':
         try:
             parsed_args = json.loads(function.arguments)
