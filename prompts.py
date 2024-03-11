@@ -20,20 +20,26 @@ def get_instructions():
 		this course.
 	'''
 
-def get_functions():
+def get_tools():
 	return [
 		{
-			"name": "createDiagram",
-			"description": "Use this function to generate a DFA, NFA, or PDA state diagram. Input is the DOT language representation of the diagram",
-			"parameters": {
-				"type": "object",
-				"properties": {
-					"dot_script": {
-						"type": "string",
-						"description": "DOT language representation of the state diagram"
-					}
-				},
-				"required": ["dot_script"]
+			"type": "function",
+			"function": {
+				"name": "createDiagram",
+				"description": """
+					Use this function to generate a DFA, NFA, or PDA state diagram. \
+					Input is the DOT language representation of the diagram
+					""",
+				"parameters": {
+					"type": "object",
+					"properties": {
+						"dot_script": {
+							"type": "string",
+							"description": "DOT language representation of the state diagram"
+						}
+					},
+					"required": ["dot_script"]
+				}
 			}
 		}
 	]

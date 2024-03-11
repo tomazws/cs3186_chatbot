@@ -36,7 +36,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 {'role': m['role'], 'content': m['content']}
                 for m in st.session_state.messages
             ],
-            functions = prompts.get_functions(),
+            tools = prompts.get_tools(),
             #stream = True,
         )
         #response = st.write_stream(stream)
