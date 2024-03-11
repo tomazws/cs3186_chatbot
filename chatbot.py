@@ -64,7 +64,23 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             st.write(response.message.content)
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
-
+st.graphviz_chart('''
+    digraph {
+        run -> intr
+        intr -> runbl
+        runbl -> run
+        run -> kernel
+        kernel -> zombie
+        kernel -> sleep
+        kernel -> runmem
+        sleep -> swap
+        swap -> runswap
+        runswap -> new
+        runswap -> runmem
+        new -> runmem
+        sleep -> runmem
+    }
+''')
 
 
 
