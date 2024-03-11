@@ -74,6 +74,8 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
 
         for chunk in stream:
+            if chunk.choices[0].delta.tool_calls == 'None'
+                break
             st.write(chunk.choices[0].delta)
             #elif delta and delta.tool_calls:
 
