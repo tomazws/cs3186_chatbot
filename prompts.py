@@ -1,6 +1,6 @@
 class prompts:
-	def get_instructions():
-		return f'''
+	def __init__(self):
+		self.instructions = f'''
 			You are a CalStateLA Computer Science department student assistant for the course \
 			CS 3186 - Introduction to Automata Theory. Below is the course details:
 
