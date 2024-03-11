@@ -62,6 +62,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     # Display assistant response in chat message container
     with st.chat_message('assistant'):
+        st.write('yo')
         # response = client.chat.completions.create(
         #     model = st.session_state['openai_model'],
         #     messages = [
