@@ -39,6 +39,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             tools = prompts.get_tools(),
             #stream = True,
         )
+        print(response)
         #response = st.write_stream(stream)
         st.markdown(response)
     st.session_state.messages.append({'role': 'assistant', 'content': response})
