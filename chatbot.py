@@ -39,12 +39,13 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             tools = prompts.get_tools(),
             #stream = True,
         )
+        response = response.choices[0]
         st.write(response)
-        if response.choices[0].finish_reason == 'tool_calls':
-            st.write(response.choices[0].message.tool_calls[0].function.name)
+        if response.finish_reason == 'tool_calls':
+            st.write(response.message.tool_calls[0].function.name)
             #st.write(call_function(messages, response[0]))
         else:
-            st.write(response.choices[0].message.content)
+            st.write(response.message.content)
     #st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method
@@ -77,7 +78,7 @@ def createDiagram(dot_script):
 #     index=0,
 #     logprobs=None,
 #     message=ChatCompletionMessage(
-#         content='feel free to ask!',
+#         content='Model's response',
 #         role='assistant',
 #         function_call=None,
 #         tool_calls=None)
