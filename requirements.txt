@@ -1,1 +1,2 @@
 openai==1.13.3
+graphviz=1.32.0
