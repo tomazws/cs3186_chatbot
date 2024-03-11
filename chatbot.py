@@ -3,6 +3,8 @@ from openai import OpenAI
 
 import prompts
 
+st.write(prompts.get_functions())
+
 st.title('CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
