@@ -30,16 +30,17 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     # Display assistant response in chat message container
     with st.chat_message('assistant'):
-        stream = client.chat.completions.create(
+        response = client.chat.completions.create(
             model = st.session_state['openai_model'],
             messages = [
                 {'role': m['role'], 'content': m['content']}
                 for m in st.session_state.messages
             ],
             functions = prompts.get_functions(),
-            stream = True,
+            #stream = True,
         )
-        response = st.write_stream(stream)
+        #response = st.write_stream(stream)
+        st.markdown(response)
     st.session_state.messages.append({'role': 'assistant', 'content': response})
 
 # Functions for OpenAI's function calling method

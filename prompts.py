@@ -24,7 +24,7 @@ def get_functions():
 	return [
 		{
 			"name": "createDiagram",
-			"description": "Generate a state diagram from DOT language",
+			"description": "Use this function to generate a DFA, NFA, or PDA state diagram. Input is the DOT language representation of the diagram",
 			"parameters": {
 				"type": "object",
 				"properties": {
