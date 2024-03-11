@@ -39,9 +39,9 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             tools = prompts.get_tools(),
             #stream = True,
         )
+        st.write(response.choices[0])
         if response.choices[0].finish_reason == 'tool_calls':
-            st.write(response.choices[0])
-            st.write(response.message.tool_calls.function.name)
+            st.write(response.message.tool_calls)
             #st.write(call_function(messages, response[0]))
         else:
             st.write(response.choices[0].message.content)
