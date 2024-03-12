@@ -15,21 +15,19 @@ def call_function(function):
             parsed_args = json.loads(function.arguments)
             createDiagram(parsed_args['dot_script'])
             st.session_state.messages.append(
-            {
-            'role': 'function',
-            'name': function.name,
-            'content': parsed_args['dot_script']
-            }   
-        )
+                {
+                    'role': 'assistant',
+                    'content': parsed_args['dot_script']
+                }   
+            )
         except Exception as e:
             st.write(e)
     else:  
         st.session_state.messages.append(
-        {
-            'role': 'function',
-            'name': function.name,
-            'content': function.arguments
-        }
+            {
+                'role': 'assistant',
+                'content': 'N/A'
+            }
         )
     ## Add if statemnt to check function name before
     ## Will need to save the content as the parsed_args for function role 
@@ -52,10 +50,11 @@ if 'messages' not in st.session_state:
 # Display chat messages from history on app rerun (Skipping 1st element - system message)
 for message in st.session_state.messages[1:]:
     with st.chat_message(message['role']):
-        if(message['role']=="function"):
-            st.graphviz_chart(message['content'])
-        else:
-            st.markdown(message['content'])
+        st.markdown(message['content'][:7])
+        # if(message['content'] == 'function'):
+        #     st.graphviz_chart(message['content'])
+        # else:
+        #     st.markdown(message['content'])
 
 # React to user input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
