@@ -36,8 +36,7 @@ def call_function(function):
 st.title('CS 3186 Student Assistant Chatbot')
 
 # Set OpenAI API key from Streamlit secrets
-#client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Set a default model
 if 'openai_model' not in st.session_state:
