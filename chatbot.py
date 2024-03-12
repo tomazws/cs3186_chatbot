@@ -50,7 +50,7 @@ if 'messages' not in st.session_state:
 # Display chat messages from history on app rerun (Skipping 1st element - system message)
 for message in st.session_state.messages[1:]:
     with st.chat_message(message['role']):
-        st.markdown(message['content'][:12])
+        st.markdown(message['content'][:25])
         # if(message['content'] == 'function'):
         #     st.graphviz_chart(message['content'])
         # else:
