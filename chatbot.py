@@ -51,7 +51,7 @@ if 'messages' not in st.session_state:
 for message in st.session_state.messages[1:]:
     with st.chat_message(message['role']):
         st.markdown(message['content'][:7])
-        st.write(message['content'][:-1] == '}')
+        st.write(message['content'][-1] == '}')
         # if(message['content'] == 'function'):
         #     st.graphviz_chart(message['content'])
         # else:
