@@ -23,7 +23,7 @@ def displayMessage(role, content):
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image_url':
-                st.text(item['image_url'])
+                st.text(item['image_url'][item['image_url'].find(','):])
                 #st.image(io.BytesIO(base64.b64decode(item['image_url'])))
             elif item['type'] == 'text':
                 string_pos = 0
