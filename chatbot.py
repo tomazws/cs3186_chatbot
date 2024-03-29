@@ -19,7 +19,7 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
+    #st.text(content)
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image_url':
