@@ -27,6 +27,8 @@ def displayMessage(role, content):
             elif item['type'] == 'text':
                 string_pos = 0
                 for match in re.finditer('```[^}]*digraph[^}]*}\n```|digraph.*{[^}]*}', item['text']):
+                    st.text('----------------------------------')
+                    st.text(match.group())
                     if re.search('```dot', match.group()):
                         dot_script = match.group()[6: -3]
                     elif re.search('```', match.group()):
