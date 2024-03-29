@@ -29,7 +29,10 @@ def displayMessage(role, content):
                 string_pos = 0
                 for match in re.finditer('```dot[^}]*}\n```|digraph.*{[^}]*}', item['text']):
                     st.write(item['text'][string_pos: match.start() - 1])
-                    st.graphviz_chart(match.group())
+                    st.text('------------')
+                    st.text(match.group())
+                    st.text('------------')
+                    #st.graphviz_chart(match.group())
                     string_pos = match.end() + 1
                 st.write(item['text'][string_pos:])
     st.write('')
