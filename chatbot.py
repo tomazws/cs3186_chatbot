@@ -41,7 +41,7 @@ def getCompletion():
             content = [
                 {
                     'type': 'text',
-                    'text': response.content[0].text
+                    'text': response.choices[0].message.content
                 }
             ]
             st.text(response.content)
