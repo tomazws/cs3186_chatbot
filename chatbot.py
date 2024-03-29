@@ -22,8 +22,8 @@ def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
         for item in content:
-            if item['type'] == 'image':
-                st.image(io.BytesIO(base64.b64decode(item['source']['data'])))
+            if item['type'] == 'image_url':
+                st.text(io.BytesIO(base64.b64decode(item['image_url'])))
             elif item['type'] == 'text':
                 string_pos = 0
                 for match in re.finditer('```dot[^}]*}\n```|digraph.*{[^}]*}', item['text']):
@@ -99,12 +99,9 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     # If there are files uploaded
     if uploaded_image is not None:
         content.append({
-            'type': 'image',
-            'source': {
-                'type': 'image_url',
-                'image_url': {
-                    'url': f'data:{uploaded_image.type};base64,{base64.b64encode(uploaded_image.getvalue()).decode("utf-8")}'
-                }
+            'type': 'image_url',
+            'image_url': {
+                'url': f'data:{uploaded_image.type};base64,{base64.b64encode(uploaded_image.getvalue()).decode("utf-8")}'
             }
         })
 
