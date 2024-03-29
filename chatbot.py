@@ -19,7 +19,7 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    #st.text(content)
+    st.text(content)
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image_url':
@@ -27,6 +27,7 @@ def displayMessage(role, content):
             elif item['type'] == 'text':
                 string_pos = 0
                 for match in re.finditer('```[\S\s]*digraph[\S\s]*```|digraph.*{[\S\s]*}\n', item['text']):
+                    st.write(match.group())
                     if re.search('```dot', match.group()):
                         dot_script = match.group()[6: -3]
                     elif re.search('```', match.group()):
