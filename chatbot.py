@@ -1,81 +1,114 @@
-import prompts
-import json
-import streamlit as st
-import graphviz
 from openai import OpenAI
+import streamlit as st
+import prompts
 
-def createDiagram(dot_script):
-   # st.markdown(dot_script)
-    st.graphviz_chart(dot_script)
-
-# Functions for OpenAI's function calling method
-def call_function(function):
-    if function.name == 'createDiagram':
-        try:
-            parsed_args = json.loads(function.arguments)
-            createDiagram(parsed_args['dot_script'])
-            st.session_state.messages.append(
-                {
-                    'role': 'assistant',
-                    'content': parsed_args['dot_script']
-                }   
-            )
-        except Exception as e:
-            st.write(e)
-    else:  
-        st.session_state.messages.append(
-            {
-                'role': 'assistant',
-                'content': 'N/A'
-            }
-        )
-    ## Add if statemnt to check function name before
-    ## Will need to save the content as the parsed_args for function role 
-    
-
-st.title('CS 3186 Student Assistant Chatbot')
-
-# Set OpenAI API key from Streamlit secrets
+################################################################################
+##                           INITIALIZE APPLICATION                           ##
+################################################################################
+# Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-# Set a default model
-if 'openai_model' not in st.session_state:
-    st.session_state['openai_model'] = 'gpt-3.5-turbo'
-
-# Initialize chat history
 if 'messages' not in st.session_state:
     st.session_state.messages = [{'role': 'system', 'content': prompts.get_instructions()}]
 
-# Display chat messages from history on app rerun (Skipping 1st element - system message)
-for message in st.session_state.messages[1:]:
-    with st.chat_message(message['role']):
-        if (message['content'][:7] == 'digraph' and message['content'][-1] == '}'):
-            st.graphviz_chart(message['content'])
-        else:
-            st.markdown(message['content'])
+################################################################################
+##                                 FUNCTIONS                                  ##
+################################################################################
+# Process the messsage and display it in the chat message container and also append message to chat history
+def displayMessage(role, content):
+    st.text(content)
+    with st.chat_message(role):
+        for item in content:
+            if item['type'] == 'image':
+                st.image(io.BytesIO(base64.b64decode(item['source']['data'])))
+            elif item['type'] == 'text':
+                string_pos = 0
+                for match in re.finditer('```dot[^}]*}\n```|digraph.*{[^}]*}', item['text']):
+                    st.write(item['text'][string_pos: match.start() - 1])
+                    st.graphviz_chart(match.group())
+                    string_pos = match.end() + 1
+                st.write(item['text'][string_pos:])
+    st.write('')
 
-# React to user input
-if prompt := st.chat_input('Ask me anything about CS 3186'):
-    # Display user message in chat message container
-    with st.chat_message('user'):
-        st.markdown(prompt)
-    # Add user message to chat history
-    st.session_state.messages.append({'role': 'user', 'content': prompt})
-
-    # Display assistant response in chat message container
-    with st.spinner('Hold on,..'):
-        with st.chat_message('assistant'):
+def getCompletion():
+    with st.spinner('Thinking ...'):
+        try:
             response = client.chat.completions.create(
-                model = st.session_state['openai_model'],
-                messages = [
-                    {'role': m['role'], 'content': m['content']}
-                    for m in st.session_state.messages
-                ],
-                tools = prompts.get_tools(),
+                model = 'gpt-4',
+                max_tokens = 1024,
+                messages = st.session_state.messages
             )
-            response = response.choices[0]
-            if response.finish_reason == 'tool_calls':
-                call_function(response.message.tool_calls[0].function)
-            else:
-                st.write(response.message.content)
-                st.session_state.messages.append({'role': 'assistant', 'content': response.message.content})
+            content = [
+                {
+                    'type': 'text',
+                    'text': response.content[0].text
+                }
+            ]
+            st.text(response.content)
+            displayMessage('assistant', content)
+            st.session_state.messages.append({'role': 'assistant', 'content': content})
+        except Exception as e:
+            st.error(f'Error: {e}')
+
+################################################################################
+##                                  LAYOUTS                                   ##
+################################################################################
+# Create title and subheader for the Streamlit page
+st.title('CS 3186 Student Assistant Chatbot')
+st.subheader('Using OpenAI Completions API')
+
+# Display chat messages
+for message in st.session_state.messages[1:]:
+    displayMessage(message['role'], message['content'])
+
+with st.sidebar:
+    st.write('Features')
+    
+if st.sidebar.button('Convert NFA to DFA'):
+    content = [
+        {
+            'type': 'text',
+            'text': 'I would like to convert NFA to DFA'
+        }
+    ]
+    displayMessage('user', content)
+    st.session_state.messages.append({'role': 'user', 'content': content})
+    getCompletion()
+    
+if st.sidebar.button('Generate a DFA diagram'):
+    content = [
+        {
+            'type': 'text',
+            'text': 'I would like to generate a DFA from regular expression or langage'
+        }
+    ]
+    displayMessage('user', content)
+    st.session_state.messages.append({'role': 'user', 'content': content})
+    getCompletion()
+
+# File uploader
+uploaded_image = st.sidebar.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
+
+# Chat input
+if prompt := st.chat_input('Ask me anything about CS 3186'):
+    content = []
+
+    # If there are files uploaded
+    if uploaded_image is not None:
+        content.append({
+            'type': 'image',
+            'source': {
+                'type': 'base64',
+                'media_type': uploaded_image.type,
+                'data': base64.b64encode(uploaded_image.getvalue()).decode("utf-8")
+            }
+        })
+
+    # Display user message in chat message container and add to chat history
+    content.append({
+        'type': 'text',
+        'text': prompt
+    })
+    displayMessage('user', content)
+    st.session_state.messages.append({'role': 'user', 'content': content})
+    getCompletion()
