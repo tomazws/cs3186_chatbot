@@ -23,8 +23,7 @@ def displayMessage(role, content):
     with st.chat_message(role):
         for item in content:
             if item['type'] == 'image_url':
-                st.text(item['image_url']['url'][item['image_url']['url'].find(','):])
-                #st.image(io.BytesIO(base64.b64decode(item['image_url'])))
+                st.image(io.BytesIO(base64.b64decode(item['image_url']['url'][item['image_url']['url'].find(',') + 1:])))
             elif item['type'] == 'text':
                 string_pos = 0
                 for match in re.finditer('```[^}]*digraph[^}]*}\n```|digraph.*{[^}]*}', item['text']):
