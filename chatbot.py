@@ -26,7 +26,7 @@ def displayMessage(role, content):
                 st.image(io.BytesIO(base64.b64decode(item['image_url']['url'][item['image_url']['url'].find(',') + 1:])))
             elif item['type'] == 'text':
                 string_pos = 0
-                for match in re.finditer('```[^}]*digraph[^}]*}\n```|digraph.*{[^}]*}', item['text']):
+                for match in re.finditer('```[\S\s]*digraph[\S\s]*```|digraph.*{[\S\s]*}\n', item['text']):
                     st.text('----------------------------------')
                     st.text(match.group())
                     if re.search('```dot', match.group()):
