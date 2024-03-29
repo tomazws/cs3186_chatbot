@@ -29,12 +29,10 @@ def displayMessage(role, content):
                 for match in re.finditer('```[\S\s]*digraph[\S\s]*```|digraph.*{[\S\s]*}\n', item['text']):
                     st.text('-------------------')
                     st.text(match.group())
-                    if re.search('```dot', match.group()):
-                        dot_script = match.group()[6: -3]
-                    elif re.search('```', match.group()):
-                        dot_script = match.group()[3: -3]
-                    else:
-                        dot_script = match.group()
+                    dot_script = match.group()[match.group().find('digraph'):]
+                    st.text('-------------------')
+                    st.text(dot_script)
+                    dot_script = dot_script[:dot_script.find('```')]
                     st.text('-------------------')
                     st.text(dot_script)
                     st.text('-------------------')
