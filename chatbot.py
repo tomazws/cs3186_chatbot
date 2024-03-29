@@ -27,7 +27,7 @@ def displayMessage(role, content):
                 #st.image(io.BytesIO(base64.b64decode(item['image_url'])))
             elif item['type'] == 'text':
                 string_pos = 0
-                for match in re.finditer('```dot[^}]*}\n```|digraph.*{[^}]*}', item['text']):
+                for match in re.finditer('```[^}]*digraph[^}]*}\n```|digraph.*{[^}]*}', item['text']):
                     if re.search('```dot', match.group()):
                         dot_script = match.group()[6: -3]
                     elif re.search('```', match.group()):
