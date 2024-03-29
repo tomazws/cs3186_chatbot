@@ -37,7 +37,7 @@ def getCompletion():
     with st.spinner('Thinking ...'):
         try:
             response = client.chat.completions.create(
-                model = 'gpt-4',
+                model = 'gpt-4-vision-preview',
                 max_tokens = 1024,
                 messages = st.session_state.messages
             )
@@ -97,7 +97,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     content = []
 
     # If there are files uploaded
-    if uploaded_image is not None and False:
+    if uploaded_image is not None:
         content.append({
             'type': 'image',
             'source': {
