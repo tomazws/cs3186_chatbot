@@ -53,7 +53,7 @@ def getCompletion():
                     'text': response.choices[0].message.content
                 }
             ]
-            st.text(response.choices)
+            #st.text(response.choices)
             displayMessage('assistant', content)
             st.session_state.messages.append({'role': 'assistant', 'content': content})
         except Exception as e:
