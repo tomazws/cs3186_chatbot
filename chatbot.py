@@ -1,5 +1,8 @@
 from openai import OpenAI
 import streamlit as st
+import re
+import base64
+import io
 import prompts
 
 ################################################################################
