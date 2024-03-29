@@ -32,7 +32,7 @@ def displayMessage(role, content):
                     st.text('------------')
                     st.text(match.group())
                     st.text('------------')
-                    #st.graphviz_chart(match.group())
+                    st.graphviz_chart(match.group()[3: -3])
                     string_pos = match.end() + 1
                 st.write(item['text'][string_pos:])
     st.write('')
