@@ -97,13 +97,14 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     content = []
 
     # If there are files uploaded
-    if uploaded_image is not None:
+    if uploaded_image is not None and False:
         content.append({
             'type': 'image',
             'source': {
-                'type': 'base64',
-                'media_type': uploaded_image.type,
-                'data': base64.b64encode(uploaded_image.getvalue()).decode("utf-8")
+                'type': 'image_url',
+                'image_url': {
+                    'url': f'data:{uploaded_image.type};base64,{base64.b64encode(uploaded_image.getvalue()).decode("utf-8")}'
+                }
             }
         })
 
